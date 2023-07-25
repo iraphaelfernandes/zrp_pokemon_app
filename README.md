@@ -1,13 +1,19 @@
 Backend application for searching Pokemon skill information through public API pokeapi.co/
 
 How to download and run the application:
+
 1 - git clone https://github.com/iraphaelfernandes/zrp_pokemon_app
+
 2 - cd zrp_pokemon_app
+
 3 - npm i
+
 4 - Open the URL http://localhost:3000/pokemon/ in your browser
+
 5 - Pass the desired pokemon name as a URL parameter, for example: http://localhost:3000/pokemon/ditto
 
 How to run the application tests:
+
 1 - npm test
 
 
