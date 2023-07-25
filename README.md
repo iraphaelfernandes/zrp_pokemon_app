@@ -8,9 +8,11 @@ How to download and run the application:
 
 3 - npm i
 
-4 - Open the URL http://localhost:3000/pokemon/ in your browser
+4 - node app.js
 
-5 - Pass the desired pokemon name as a URL parameter, for example: http://localhost:3000/pokemon/ditto
+5 - Open the URL http://localhost:3000/pokemon/ in your browser
+
+6 - Pass the desired pokemon name as a URL parameter, for example: http://localhost:3000/pokemon/ditto
 
 How to run the application tests:
 
