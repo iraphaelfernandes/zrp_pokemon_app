@@ -1,41 +1,32 @@
 const request = require('supertest');
 const app = require('../app');
 
-describe('Pokemon Skill Search API', () => {
-  let server;
+describe('Tests for the application', () => {
+  test('Should return abilities in alphabetical order', async () => {
+    const mockResponse = {
+      data: {
+        abilities: [
+          { ability: { name: 'ability2' } },
+          { ability: { name: 'ability1' } },
+        ],
+      },
+    };
 
-  beforeAll((done) => {
+    jest.spyOn(require('axios'), 'get').mockResolvedValue(mockResponse);
 
-    server = app.listen(3000, () => {
-      done();
-    });
-  });
+    const response = await request(app).get('/pokemon/testpokemon');
 
-  afterAll((done) => {
-    
-    server.close(() => {
-      done();
-    });
-  });
-
-  test('It should return an array with skills in alphabetical order', async () => {
-    const response = await request(app).get('/pokemon/bulbasaur');
     expect(response.status).toBe(200);
-    expect(Array.isArray(response.body)).toBe(true);
-    expect(response.body).toEqual(expect.arrayContaining(["chlorophyll", "overgrow"]));
+    expect(response.body).toEqual(['ability1', 'ability2']);
   });
 
-  test('Should return an empty array for a pokemon not found', async () => {
-    const response = await request(app).get('/pokemon/nonexistentpokemon');
-    expect(response.status).toBe(404);
+  test('Should return status 404 for non-existent pokemon', async () => {
+  
+    jest.spyOn(require('axios'), 'get').mockRejectedValue({ response: { status: 404 } });
 
-    if (response.status === 404) {
- 
-      expect(response.body.message).toBe('Pokemon not found');
-    } else {
- 
-      expect(Array.isArray(response.body)).toBe(true);
-      expect(response.body).toEqual([]);
-    }
+    const response = await request(app).get('/pokemon/nonexistentpokemon');
+
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({ message: 'Pokemon not found' });
   });
 });
